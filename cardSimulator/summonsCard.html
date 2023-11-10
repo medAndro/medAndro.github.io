@@ -17,6 +17,7 @@
     font-family: 'ONE-Mobile-POP', sans-serif !important;
     background-image: url('img/BG_Pattern.png'); /* 이미지의 경로를 지정합니다. */
     background-repeat: repeat; /* 이미지를 가로 및 세로로 반복합니다. */
+	color:balck;
 	    text-shadow: 
         -2px -2px 0 #fff,  
          2px -2px 0 #fff,
@@ -25,12 +26,27 @@
 }
 	button {
     font-family: 'ONE-Mobile-POP', sans-serif;
-	    text-shadow: 
-        -2px -2px 0 #fff,  
-         2px -2px 0 #fff,
-        -2px  2px 0 #fff,
-         2px  2px 0 #fff; 
+
 	}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: #ffdd74 !important;
+    border-color: #ffdd74 !important;
+	    border-width: 3px !important;
+	border-style: solid !important;
+	border-radius: 10px;
+    border-color: #f1a330 !important;
+}
+
+.btn-primary:active {
+    background-color: #c7ad5c !important;
+    border-color: #c7ad5c !important;
+}
+
         table {
 			margin
             width: 100%; /* 표의 너비를 부모 요소의 가로폭에 맞게 조절합니다. */
@@ -52,6 +68,20 @@
 		img {
 		  max-width: 100%;
 		}
+
+		@media screen and (max-width: 765px) and (min-width: 300px){
+
+.table-container{
+	 width:100%;	
+	 overflow-x:auto;
+     white-space: nowrap;
+	}
+   
+ table{
+    width:auto;
+ } 
+ 
+ }
 	</style>
 </head>
 <body>
@@ -70,25 +100,14 @@
     <div id="eldainText" style="margin-left: 1em;">엘다인 사도 가지고 싶다</div>
 </div>
 
-<h2 style="margin-bottom: 1em;">획득한 엘다인 : <span id="myEldainNum" >0</span></h2>
+<h2 class="mt-4" style="margin-bottom: 1em;">획득한 엘다인 <span id="myEldainNum" >없어욧!</span></h2>
+
+<div class="table-container">
 
 
     <table>
         <thead>
             <tr>
-                <th>기본 연성카드</th>
-                <th>★1 연성카드</th>
-                <th>★1~2 연성카드</th>
-                <th>★2 연성 확정 카드</th>
-                <th>★1~3 연성카드</th>
-                <th>강화된 ★1~3 연성카드 합성</th>
-                <th>★2~3 연성카드 합성</th>
-				<th>강화된 ★2~3 연성카드</th>
-                <th>엘다인사도 연성카드</th>
-            </tr>
-        </thead>
-        <tbody>
-		     <tr>
                 <th><img src="img/SummonsCard_01.png"></th>
                 <th><img src="img/SummonsCard_02.png"></th>
                 <th><img src="img/SummonsCard_03.png"></th>
@@ -99,6 +118,8 @@
                 <th><img src="img/SummonsCard_08.png"></th>
                 <th><img src="img/SummonsCard_09.png"></th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
 			<td><span id="cardQuantity0"></span></td>
 			<td><span id="cardQuantity1"></span></td>
@@ -111,15 +132,15 @@
 			<td><span id="cardQuantity8"></span></td>
 		</tr>
 		 <tr>
-			<td><button id="summonsCard0">합성</button></td>
-			<td><button id="summonsCard1">합성</button></td>
-			<td><button id="summonsCard2">합성</button></td>
-			<td><button id="summonsCard3">합성</button></td>
-			<td><button id="summonsCard4">합성</button></td>
-			<td><button id="summonsCard5">합성</button></td>
-			<td><button id="summonsCard6">합성</button></td>
-			<td><button id="summonsCard7">합성</button></td>
-			<td><button id="summonsCard8">합성</button></td>
+			<td><button id="summonsCard0"  type="button" style="color:black; " class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard1"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard2"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard3"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard4"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard5"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard6"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard7"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
+			<td><button id="summonsCard8"  type="button" style="color:black"  class="btn btn-primary">뽑기</button></td>
             </tr>
 			<!--
 		 <tr>
@@ -138,19 +159,28 @@
 
 
     </table>
+	</div>
 	<p id="info"></p>
 	<p id="getItemInfo"></p>
     <p id="result"></p>
 	<p id="detail"></p>
     <script>
 		var successCount = new Array(9); 
-        let failureCount = 0;
+		var failureCount = new Array(9); 
+		
         let totalCards = 0;
 		let wantEldain = 0;
+		
 		let eldainQuantity = 0;
+		var myEldain = new Array(7); //엘다인 보유량
+
+
 		var summonsCard = new Array(9); 
-		summonsCard.fill(0);
+		summonsCard.fill(100);
 		successCount.fill(0);
+		myEldain.fill(0);
+
+		failureCount.fill(0);
 		
 		function refreshCardQuantity(){
 			document.getElementById("cardQuantity0").textContent = `${summonsCard[0]} 장`;
@@ -188,10 +218,10 @@ updateProgressBar(0);
 					successCount[cardIdx]++;
 					summonsCard[cardIdx+1]++;
 					
-					document.getElementById("result").textContent = `${cardname} 강화 성공!`;
+					document.getElementById("result").textContent = `${cardname} 연성 성공!`;
 					document.getElementById("getItemInfo").textContent = `${nextCardname} 획득`;
 				} else {
-					failureCount++;
+					failureCount[cardIdx]++;
 					if(cardIdx<=1){
 						wantEldainAdd = 2**cardIdx;
 					}else{
@@ -200,12 +230,12 @@ updateProgressBar(0);
 					
 					wantEldain += 2**cardIdx;
 
-					document.getElementById("result").textContent = `${cardname} 강화 실패... `;
-					document.getElementById("getItemInfo").textContent = `${wantEldainAdd} 엘다인가지고싶다포인트 획득`;
+					document.getElementById("result").textContent = `${cardname} 연성 실패... `;
+					document.getElementById("getItemInfo").textContent = `${wantEldainAdd} 엘다인가지고싶다 포인트 획득`;
 				}
 				document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
 
-				document.getElementById("detail").textContent = `${cardname} 성공 횟수 : ${successCount[cardIdx]}, 전체 실패 횟수 : ${failureCount}`;
+				document.getElementById("detail").textContent = `${cardname} 강화확률 : ${Math.round(percent*100)}%, 성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}`;
 			}else{
 				document.getElementById("result").textContent = `${cardname}가 부족합니다`;
 				document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
@@ -216,9 +246,9 @@ updateProgressBar(0);
 			if (wantEldain>=2000)
 			{
 					wantEldain-=2000;
-					eldainQuantity++;
+					getEldain(1);
 			}
-			document.getElementById("myEldainNum").textContent = `${eldainQuantity}`;
+			//document.getElementById("myEldainNum").textContent = `${eldainQuantity}`;
 			
 			updateProgressBar(wantEldain);
 			refreshCardQuantity();
@@ -226,13 +256,42 @@ updateProgressBar(0);
 		}
 
 
-		function getEldain() {
+		function getEldain(isPoint) {
 			if(summonsCard[8]>=1){
-				summonsCard[8]--;
+				if(!isPoint){
+					summonsCard[8]--;
+					}
+				
 				eldainQuantity++;
+				const randomNumber = Math.floor(Math.random() * 4); // 0우이, 1시온, 2클로에, 3아야
+				myEldain[randomNumber]++;
+
+
 				}
 				refreshCardQuantity();
-				document.getElementById("myEldainNum").textContent = `${eldainQuantity}`;
+				document.getElementById("myEldainNum").textContent = ``;
+
+
+				for (var i=0 ;i<4 ;i++ )
+				{
+					if (myEldain[i])
+					{
+						const eldainIcons = [ "./img/Icon_GraduateSKill_Ui.png", "./img/Icon_GraduateSKill_xXionx.png", "./img/Icon_GraduateSKill_Chloe.png", "./img/Icon_GraduateSKill_Aya.png"];
+						const eldainNames = [ "우이", "시온", "클로에", "아야"];
+						const imageTag = document.createElement("img");
+						imageTag.src = eldainIcons[i];
+						imageTag.style.width = "3rem";
+						imageTag.style.height = "3rem";
+						const numberTag = document.createElement("span");
+						numberTag.textContent = eldainNames[i]+"x" + myEldain[i]+" ";
+
+						document.getElementById("myEldainNum").appendChild(imageTag);
+						document.getElementById("myEldainNum").appendChild(numberTag);
+					}
+
+				}
+
+
 		}
 
 
@@ -268,7 +327,7 @@ updateProgressBar(0);
 			enchant(0.29, '강화된 ★2~3 연성카드', 7, '엘다인사도 연성카드',1);
         });
 		document.getElementById("summonsCard8").addEventListener("click", function() {
-			getEldain();
+			getEldain(0);
         });
     </script>
 </body>
