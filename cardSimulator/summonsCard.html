@@ -1,334 +1,463 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>연성카드 시뮬레이터</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/@noonnu/one-mobile-pop@0.1.0/index.min.css" rel="stylesheet">
-	<style>
-	h1{
-	    font-family: 'ONE-Mobile-POP', sans-serif !important;
-	}
-	.progress {height: 2em;}
-	body {
-	padding:10px;
-    font-family: 'ONE-Mobile-POP', sans-serif !important;
-    background-image: url('img/BG_Pattern.png'); /* 이미지의 경로를 지정합니다. */
-    background-repeat: repeat; /* 이미지를 가로 및 세로로 반복합니다. */
-	color:balck;
-	    text-shadow: 
-        -2px -2px 0 #fff,  
-         2px -2px 0 #fff,
-        -2px  2px 0 #fff,
-         2px  2px 0 #fff; 
-}
-	button {
-    font-family: 'ONE-Mobile-POP', sans-serif;
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@noonnu/one-mobile-pop@0.1.0/index.min.css" rel="stylesheet">
+    <style>
+      h1 {
+        font-family: 'ONE-Mobile-POP', sans-serif !important;
+      }
 
-	}
+      .progress {
+        height: 2em;
+      }
 
-.btn-primary,
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:visited,
-.btn-primary:focus {
-    background-color: #ffdd74 !important;
-    border-color: #ffdd74 !important;
-	    border-width: 3px !important;
-	border-style: solid !important;
-	border-radius: 10px;
-    border-color: #f1a330 !important;
-}
+      body {
+        padding: 10px;
+        font-family: 'ONE-Mobile-POP', sans-serif !important;
+        background-image: url('img/BG_Pattern.png');
+        /* 이미지의 경로를 지정합니다. */
+        background-repeat: repeat;
+        /* 이미지를 가로 및 세로로 반복합니다. */
+        color: black;
+		font-size: large !important;
+        text-shadow:
+          -2px -2px 0 #fff,
+          2px -2px 0 #fff,
+          -2px 2px 0 #fff,
+          2px 2px 0 #fff;
 
-.btn-primary:active {
-    background-color: #c7ad5c !important;
-    border-color: #c7ad5c !important;
-}
+      }
+      button {
+        font-family: 'ONE-Mobile-POP', sans-serif;
+        font-size: large !important;
+      }
+
+      .btn-primary,
+      .btn-primary:hover,
+      .btn-primary:active,
+      .btn-primary:visited,
+      .btn-primary:focus {
+        background-color: #ffdd74 !important;
+        border-color: #ffdd74 !important;
+        border-width: 3px !important;
+        border-style: solid !important;
+        border-radius: 10px;
+        border-color: #f1a330 !important;
+      }
+
+      .btn-primary:active {
+        background-color: #c7ad5c !important;
+        border-color: #c7ad5c !important;
+      }
+
+      table {
+        margin: 0;
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      th {
+        position: relative;
+        vertical-align: middle;
+      }
+
+      th,
+      td {
+        padding: 5px;
+        text-align: center;
+        border: 2px solid white;
+        font-size: medium;
+        background-color: #e9f5cf;
+        min-width: 120px;
+        /* 특정 셀의 최소 너비 설정 */
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      @media screen and (max-width: 1000px) and (min-width: 300px) {
+        .table-container {
+          width: 100%;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
 
         table {
-			margin
-            width: 100%; /* 표의 너비를 부모 요소의 가로폭에 맞게 조절합니다. */
-			border-collapse: separate; /* 테두리를 합칩니다. */
-
-			table-layout: fixed;
-			  border-style: hidden;
+          width: auto;
         }
+      }
 
-        th, td {
-			padding:5px;
-            text-align: center;
-			border: 2px solid white;
-			background-color: #e9f5cf; /* 내부를 연두색으로 채웁니다. */
-        }
-		td {
+      .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+      }
 
-		}
-		img {
-		  max-width: 100%;
-		}
+      .overlay img {
+        position: relative;
+      }
+	  .infoTexts {
 
-		@media screen and (max-width: 765px) and (min-width: 300px){
+	  	  white-space: pre-line;
 
-.table-container{
-	 width:100%;	
-	 overflow-x:auto;
-     white-space: nowrap;
-	}
-   
- table{
-    width:auto;
- } 
- 
- }
-	</style>
-</head>
-<body>
-<div>
-<h1> 트릭컬 리바이브 연성카드 시뮬레이터</h1>
-</div>
-
-<div style="display: flex; align-items: center; max-width: 40em; position: relative;">
-    <div style="flex: 1; display: flex; align-items: center; position: relative;">
+	  }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1> 트릭컬 리바이브 연성카드 시뮬레이터</h1>
+    </div>
+    <div style="display: flex; align-items: center; max-width: 40em; position: relative;">
+      <div style="flex: 1; display: flex; align-items: center; position: relative;">
         <div class="progress" style="flex: 1;">
-            <div class="progress-bar-striped bg-info progress-bar-animated" role="progressbar" id="progressBar"  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+          <div class="progress-bar-striped bg-info progress-bar-animated" role="progressbar" id="progressBar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
         </div>
         <img src="img/SummonsCard_09.png" alt="아이콘" style="max-width: 3rem; margin-left: -0.5em;">
-        <small class="position-absolute"  id="progressText"  style="left: 50%; transform: translateX(-50%);">0 / 2000</small>
+        <small class="position-absolute" id="progressText" style="left: 50%; transform: translateX(-50%);">0 / 2000</small>
+      </div>
+      <div id="eldainText" style="margin-left: 1em;">엘다인 사도 가지고 싶다</div>
     </div>
-    <div id="eldainText" style="margin-left: 1em;">엘다인 사도 가지고 싶다</div>
-</div>
-
-<h2 class="mt-4" style="margin-bottom: 1em;">획득한 엘다인 <span id="myEldainNum" >없어욧!</span></h2>
-
-<div class="table-container">
-
-
-    <table>
+    <h2 class="mt-4" style="margin-bottom: 1em;">획득한 엘다인 <span id="myEldainNum">없어욧!</span>
+    </h2>
+    <div class="table-container">
+      <table>
         <thead>
-            <tr>
-                <th><img src="img/SummonsCard_01.png"></th>
-                <th><img src="img/SummonsCard_02.png"></th>
-                <th><img src="img/SummonsCard_03.png"></th>
-                <th><img src="img/SummonsCard_04.png"></th>
-                <th><img src="img/SummonsCard_05.png"></th>
-                <th><img src="img/SummonsCard_06.png"></th>
-                <th><img src="img/SummonsCard_07.png"></th>
-                <th><img src="img/SummonsCard_08.png"></th>
-                <th><img src="img/SummonsCard_09.png"></th>
-            </tr>
+          <tr>
+            <th>
+              <div class="overlay" id="overlay_00">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_01">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_01.png" id="summonsCardImg">
+            </th>
+
+            <th>
+			   <div class="overlay" id="overlay_10">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_11">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_02.png">
+            </th>
+
+            <th>
+			<div class="overlay" id="overlay_20">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_21">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_03.png">
+            </th>
+
+            <th>
+			<div class="overlay" id="overlay_30">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_31">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_04.png">
+            </th>
+            <th>
+			<div class="overlay" id="overlay_40">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_41">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_05.png">
+            </th>
+            <th>
+			<div class="overlay" id="overlay_50">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_51">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_06.png">
+            </th>
+            <th>
+			<div class="overlay" id="overlay_60">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_61">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_07.png">
+            </th>
+            <th>
+			<div class="overlay" id="overlay_70">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_71">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_08.png">
+            </th>
+            <th>
+			<div class="overlay" id="overlay_80">
+                <img src="img/Success.png" alt="Success">
+              </div>
+			  <div class="overlay" id="overlay_81">
+                <img src="img/Summon.png" alt="Summon">
+              </div>
+              <img src="img/SummonsCard_09.png">
+            </th>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-			<td><span id="cardQuantity0"></span></td>
-			<td><span id="cardQuantity1"></span></td>
-			<td><span id="cardQuantity2"></span></td>
-			<td><span id="cardQuantity3"></span></td>
-			<td><span id="cardQuantity4"></span></td>
-			<td><span id="cardQuantity5"></span></td>
-			<td><span id="cardQuantity6"></span></td>
-			<td><span id="cardQuantity7"></span></td>
-			<td><span id="cardQuantity8"></span></td>
-		</tr>
-		 <tr>
-			<td><button id="summonsCard0"  type="button" style="color:black; " class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard1"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard2"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard3"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard4"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard5"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard6"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard7"  type="button" style="color:black" class="btn btn-primary">카드 합성</button></td>
-			<td><button id="summonsCard8"  type="button" style="color:black"  class="btn btn-primary">뽑기</button></td>
-            </tr>
-			<!--
-		 <tr>
-			<td><button id="summonsCard0_10">합성x10</button></td>
-			<td><button id="summonsCard1_10">합성x10</button></td>
-			<td><button id="summonsCard2_10">합성x10</button></td>
-			<td><button id="summonsCard3_10">합성x10</button></td>
-			<td><button id="summonsCard4_10">합성x10</button></td>
-			<td><button id="summonsCard5_10">합성x10</button></td>
-			<td><button id="summonsCard6_10">합성x10</button></td>
-			<td><button id="summonsCard7_10">합성x10</button></td>
-			<td><button id="summonsCard8_10">합성x10</button></td>
-            </tr>
+          <tr>
+            <td style="height:3em;">
+              <span id="cardQuantity0"></span>
+            </td>
+            <td>
+              <span id="cardQuantity1"></span>
+            </td>
+            <td>
+              <span id="cardQuantity2"></span>
+            </td>
+            <td>
+              <span id="cardQuantity3"></span>
+            </td>
+            <td>
+              <span id="cardQuantity4"></span>
+            </td>
+            <td>
+              <span id="cardQuantity5"></span>
+            </td>
+            <td>
+              <span id="cardQuantity6"></span>
+            </td>
+            <td>
+              <span id="cardQuantity7"></span>
+            </td>
+            <td>
+              <span id="cardQuantity8"></span>
+            </td>
+          </tr>
+          <tr>
+            <td style="height:4em;">
+              <button id="summonsCard0" type="button" style="color:black; " class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard1" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard2" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard3" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard4" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard5" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard6" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard7" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+            </td>
+            <td>
+              <button id="summonsCard8" type="button" style="color:black" class="btn btn-primary">뽑기</button>
+            </td>
+          </tr>
+          <!--
+		 <tr><td><button id="summonsCard0_10">합성x10</button></td><td><button id="summonsCard1_10">합성x10</button></td><td><button id="summonsCard2_10">합성x10</button></td><td><button id="summonsCard3_10">합성x10</button></td><td><button id="summonsCard4_10">합성x10</button></td><td><button id="summonsCard5_10">합성x10</button></td><td><button id="summonsCard6_10">합성x10</button></td><td><button id="summonsCard7_10">합성x10</button></td><td><button id="summonsCard8_10">합성x10</button></td></tr>
              . -->
         </tbody>
-
-
-    </table>
-	</div>
-	<p id="info"></p>
-	<p id="getItemInfo"></p>
-    <p id="result"></p>
-	<p id="detail"></p>
+      </table>
+    </div>
+	<div class="infoTexts">
+	<span id="result"></span>
+    <span id="info"></span><br>
+    <span id="getItemInfo"></span><br>
+    <span id="detail"></p></span>
     <script>
-		var successCount = new Array(9); 
-		var failureCount = new Array(9); 
-		
-        let totalCards = 0;
-		let wantEldain = 0;
-		
-		let eldainQuantity = 0;
-		var myEldain = new Array(7); //엘다인 보유량
+      var successCount = new Array(9);
+      var failureCount = new Array(9);
+      let totalCards = 0;
+      let wantEldain = 0;
+      let eldainQuantity = 0;
+      var myEldain = new Array(7); //엘다인 보유량
+      var summonsCard = new Array(9);
+      summonsCard.fill(0);
+      successCount.fill(0);
+      myEldain.fill(0);
+      failureCount.fill(0);
 
+      function refreshCardQuantity() {
+        document.getElementById("cardQuantity0").textContent = `${summonsCard[0]} 장`;
+        document.getElementById("cardQuantity1").textContent = `${summonsCard[1]} 장`;
+        document.getElementById("cardQuantity2").textContent = `${summonsCard[2]} 장`;
+        document.getElementById("cardQuantity3").textContent = `${summonsCard[3]} 장`;
+        document.getElementById("cardQuantity4").textContent = `${summonsCard[4]} 장`;
+        document.getElementById("cardQuantity5").textContent = `${summonsCard[5]} 장`;
+        document.getElementById("cardQuantity6").textContent = `${summonsCard[6]} 장`;
+        document.getElementById("cardQuantity7").textContent = `${summonsCard[7]} 장`;
+        document.getElementById("cardQuantity8").textContent = `${summonsCard[8]} 장`;
+      }
+      refreshCardQuantity();
 
-		var summonsCard = new Array(9); 
-		summonsCard.fill(100);
-		successCount.fill(0);
-		myEldain.fill(0);
-
-		failureCount.fill(0);
-		
-		function refreshCardQuantity(){
-			document.getElementById("cardQuantity0").textContent = `${summonsCard[0]} 장`;
-			document.getElementById("cardQuantity1").textContent = `${summonsCard[1]} 장`;
-			document.getElementById("cardQuantity2").textContent = `${summonsCard[2]} 장`;
-			document.getElementById("cardQuantity3").textContent = `${summonsCard[3]} 장`;
-			document.getElementById("cardQuantity4").textContent = `${summonsCard[4]} 장`;
-			document.getElementById("cardQuantity5").textContent = `${summonsCard[5]} 장`;
-			document.getElementById("cardQuantity6").textContent = `${summonsCard[6]} 장`;
-			document.getElementById("cardQuantity7").textContent = `${summonsCard[7]} 장`;
-			document.getElementById("cardQuantity8").textContent = `${summonsCard[8]} 장`;
-		}
-		refreshCardQuantity();
-
-		    function updateProgressBar(eldainPoint) {
-        
+      function updateProgressBar(eldainPoint) {
         // 프로그래스 바 업데이트
         var progressBar = document.getElementById("progressBar");
         progressBar.style.width = (eldainPoint / 2000 * 100) + "%";
         progressBar.setAttribute("aria-valuenow", eldainPoint);
-        
         // 텍스트 업데이트
         var progressText = document.getElementById("progressText");
         progressText.textContent = eldainPoint + " / 2000";
+      }
+      updateProgressBar(0);
+
+      function enchant(percent, cardname, cardIdx, nextCardname, repeat, timerArr) {
+        const random = Math.random(); // 0 이상 1 미만의 랜덤 숫자 생성
+        if (cardIdx == 0 || summonsCard[cardIdx] >= 2) { //기본강화카드거나 2장이상 모인경우만 작동
+          totalCards += 2;
+          summonsCard[cardIdx] = summonsCard[cardIdx] - 2; //강화시 2장 소모
+          if (random < percent) {
+            successCount[cardIdx]++;
+            summonsCard[cardIdx + 1]++;
+			showOverlay('overlay_'+cardIdx+'0', 'overlay_'+cardIdx+'1', timerArr);
+            document.getElementById("result").textContent = `${cardname} 연성 성공!`;
+            document.getElementById("getItemInfo").textContent = `${nextCardname} 획득`;
+          } else {
+            failureCount[cardIdx]++;
+            if (cardIdx <= 1) {
+              wantEldainAdd = 2 ** cardIdx;
+            } else {
+              wantEldainAdd = 2 ** (cardIdx + 1);
+            }
+            wantEldain += 2 ** cardIdx;
+			showOverlay('overlay_'+cardIdx+'1', 'overlay_'+cardIdx+'0', timerArr);
+            document.getElementById("result").textContent = `${cardname} 연성 실패... `;
+            document.getElementById("getItemInfo").textContent = `${wantEldainAdd} 엘다인가지고싶다 포인트 획득`;
+          }
+          document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
+          document.getElementById("detail").textContent = `성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}\n※${cardname} 강화확률 : ${Math.round(percent*100)}%`;
+        } else {
+          document.getElementById("result").textContent = `${cardname}가 부족합니다`;
+          document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
+          document.getElementById("detail").textContent = `최소 2장 이상 모아주세요`;
+        }
+        //document.getElementById("eldainProgress").value  =wantEldain ; //엘다인가지고싶다 프로그레스바
+        if (wantEldain >= 2000) {
+          wantEldain -= 2000;
+          getEldain(1);
+        }
+        //document.getElementById("myEldainNum").textContent = `${eldainQuantity}`;
+        updateProgressBar(wantEldain);
+        refreshCardQuantity();
+      }
+
+      function getEldain(isPoint) {
+        if (summonsCard[8] >= 1) {
+          if (!isPoint) {
+            summonsCard[8]--;
+			showOverlay('overlay_81', 'overlay_80', timers8);
+          }
+          eldainQuantity++;
+          const randomNumber = Math.floor(Math.random() * 4); // 0우이, 1시온, 2클로에, 3아야
+          myEldain[randomNumber]++;
+        }
+        refreshCardQuantity();
+        document.getElementById("myEldainNum").textContent = ``;
+        for (var i = 0; i < 4; i++) {
+          if (myEldain[i]) {
+            const eldainIcons = ["./img/Icon_GraduateSKill_Ui.png", "./img/Icon_GraduateSKill_xXionx.png", "./img/Icon_GraduateSKill_Chloe.png", "./img/Icon_GraduateSKill_Aya.png"];
+            const eldainNames = ["우이", "시온", "클로에", "아야"];
+            const imageTag = document.createElement("img");
+            imageTag.src = eldainIcons[i];
+            imageTag.style.width = "3rem";
+            imageTag.style.height = "3rem";
+            imageTag.style.borderRadius = "50%";
+            const numberTag = document.createElement("span");
+            numberTag.textContent = eldainNames[i] + "x" + myEldain[i] + " ";
+            document.getElementById("myEldainNum").appendChild(imageTag);
+            document.getElementById("myEldainNum").appendChild(numberTag);
+          }
+        }
+      }
+var timers0 = [];
+var timers1 = [];
+var timers2 = [];
+var timers3 = [];
+var timers4 = [];
+var timers5 = [];
+var timers6 = [];
+var timers7 = [];
+var timers8 = [];
+
+function showOverlay(over, hide, timers) {
+    var overlay = document.getElementById(over);
+    var hideElement = document.getElementById(hide);
+
+    // 숨기기
+    hideElement.style.display = 'none';
+
+    // 타이머 초기화
+    clearTimers(timers);
+
+        overlay.style.display = 'block';
+        var timer = setTimeout(function () {
+            overlay.style.display = 'none';
+        }, 1500);
+
+        timers.push(timer);
+
+}
+
+function clearTimers(timers) {
+    for (var i = 0; i < timers.length; i++) {
+        clearTimeout(timers[i]);
     }
-updateProgressBar(0);
+    timers = [];
+}
 
-		function enchant(percent, cardname, cardIdx, nextCardname, repeat ) {
-			
-			const random = Math.random(); // 0 이상 1 미만의 랜덤 숫자 생성
-			if(cardIdx==0 || summonsCard[cardIdx]>=2 ){ //기본강화카드거나 2장이상 모인경우만 작동
-				totalCards += 2;
-				summonsCard[cardIdx] = summonsCard[cardIdx]-2; //강화시 2장 소모
-				if (random < percent) {
-					successCount[cardIdx]++;
-					summonsCard[cardIdx+1]++;
-					
-					document.getElementById("result").textContent = `${cardname} 연성 성공!`;
-					document.getElementById("getItemInfo").textContent = `${nextCardname} 획득`;
-				} else {
-					failureCount[cardIdx]++;
-					if(cardIdx<=1){
-						wantEldainAdd = 2**cardIdx;
-					}else{
-						wantEldainAdd = 2**(cardIdx+1);
-					}
-					
-					wantEldain += 2**cardIdx;
-
-					document.getElementById("result").textContent = `${cardname} 연성 실패... `;
-					document.getElementById("getItemInfo").textContent = `${wantEldainAdd} 엘다인가지고싶다 포인트 획득`;
-				}
-				document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
-
-				document.getElementById("detail").textContent = `${cardname} 강화확률 : ${Math.round(percent*100)}%, 성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}`;
-			}else{
-				document.getElementById("result").textContent = `${cardname}가 부족합니다`;
-				document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
-
-				document.getElementById("detail").textContent = `최소 2장 이상 모아주세요`;
-			}
-			//document.getElementById("eldainProgress").value  =wantEldain ; //엘다인가지고싶다 프로그레스바
-			if (wantEldain>=2000)
-			{
-					wantEldain-=2000;
-					getEldain(1);
-			}
-			//document.getElementById("myEldainNum").textContent = `${eldainQuantity}`;
-			
-			updateProgressBar(wantEldain);
-			refreshCardQuantity();
-
-		}
-
-
-		function getEldain(isPoint) {
-			if(summonsCard[8]>=1){
-				if(!isPoint){
-					summonsCard[8]--;
-					}
-				
-				eldainQuantity++;
-				const randomNumber = Math.floor(Math.random() * 4); // 0우이, 1시온, 2클로에, 3아야
-				myEldain[randomNumber]++;
-
-
-				}
-				refreshCardQuantity();
-				document.getElementById("myEldainNum").textContent = ``;
-
-
-				for (var i=0 ;i<4 ;i++ )
-				{
-					if (myEldain[i])
-					{
-						const eldainIcons = [ "./img/Icon_GraduateSKill_Ui.png", "./img/Icon_GraduateSKill_xXionx.png", "./img/Icon_GraduateSKill_Chloe.png", "./img/Icon_GraduateSKill_Aya.png"];
-						const eldainNames = [ "우이", "시온", "클로에", "아야"];
-						const imageTag = document.createElement("img");
-						imageTag.src = eldainIcons[i];
-						imageTag.style.width = "3rem";
-						imageTag.style.height = "3rem";
-						const numberTag = document.createElement("span");
-						numberTag.textContent = eldainNames[i]+"x" + myEldain[i]+" ";
-
-						document.getElementById("myEldainNum").appendChild(imageTag);
-						document.getElementById("myEldainNum").appendChild(numberTag);
-					}
-
-				}
-
-
-		}
-
-
-        document.getElementById("summonsCard0").addEventListener("click", function() {
-            enchant(0.5, '기본 연성카드', 0,  '★1 연성카드',1);
-        });
-
-		document.getElementById("summonsCard1").addEventListener("click", function() {
-			enchant(0.47, '★1 연성카드', 1, '★1~2 연성카드',1);
-        });
-
-		document.getElementById("summonsCard2").addEventListener("click", function() {
-			enchant(0.44, '★1~2 연성카드', 2, '★2 연성 확정 카드',1);
-        });
-
-		document.getElementById("summonsCard3").addEventListener("click", function() {
-			enchant(0.41, '★2 연성 확정 카드', 3, '★1~3 연성카드',1);
-        });
-
-		document.getElementById("summonsCard4").addEventListener("click", function() {
-			enchant(0.38, '★1~3 연성카드', 4, '강화된 ★1~3 연성카드',1);
-        });
-
-		document.getElementById("summonsCard5").addEventListener("click", function() {
-			enchant(0.35, '강화된 ★1~3 연성카드', 5, '★2~3 연성카드',1);
-        });
-
-		document.getElementById("summonsCard6").addEventListener("click", function() {
-			enchant(0.32, '★2~3 연성카드', 6, '강화된 ★2~3 연성카드',1);
-        });
-
-		document.getElementById("summonsCard7").addEventListener("click", function() {
-			enchant(0.29, '강화된 ★2~3 연성카드', 7, '엘다인사도 연성카드',1);
-        });
-		document.getElementById("summonsCard8").addEventListener("click", function() {
-			getEldain(0);
-        });
+      document.getElementById("summonsCard0").addEventListener("click", function() {
+        enchant(0.5, '기본 연성카드', 0, '★1 연성카드', 1, timers0);
+        
+      });
+      document.getElementById("summonsCard1").addEventListener("click", function() {
+        enchant(0.47, '★1 연성카드', 1, '★1~2 연성카드', 1, timers1);
+      });
+      document.getElementById("summonsCard2").addEventListener("click", function() {
+        enchant(0.44, '★1~2 연성카드', 2, '★2 연성 확정 카드', 1, timers2);
+      });
+      document.getElementById("summonsCard3").addEventListener("click", function() {
+        enchant(0.41, '★2 연성 확정 카드', 3, '★1~3 연성카드', 1, timers3);
+      });
+      document.getElementById("summonsCard4").addEventListener("click", function() {
+        enchant(0.38, '★1~3 연성카드', 4, '강화된 ★1~3 연성카드', 1, timers4);
+      });
+      document.getElementById("summonsCard5").addEventListener("click", function() {
+        enchant(0.35, '강화된 ★1~3 연성카드', 5, '★2~3 연성카드', 1, timers5);
+      });
+      document.getElementById("summonsCard6").addEventListener("click", function() {
+        enchant(0.32, '★2~3 연성카드', 6, '강화된 ★2~3 연성카드', 1, timers6);
+      });
+      document.getElementById("summonsCard7").addEventListener("click", function() {
+        enchant(0.29, '강화된 ★2~3 연성카드', 7, '엘다인사도 연성카드', 1, timers7);
+      });
+      document.getElementById("summonsCard8").addEventListener("click", function() {
+        getEldain(0);
+		
+      });
     </script>
-</body>
+  </body>
 </html>
