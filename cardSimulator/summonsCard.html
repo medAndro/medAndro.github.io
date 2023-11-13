@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@noonnu/one-mobile-pop@0.1.0/index.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/nastyox/Rando.js@master/code/plain-javascript/2.0.0/rando-min.js"></script>
     <style>
       h1 {
         font-family: 'ONE-Mobile-POP', sans-serif !important;
@@ -364,16 +365,19 @@
       updateProgressBar(0);
 
       function enchant(percent, cardname, cardIdx, nextCardname, repeat, timerArr) {
-        const random = Math.random(); // 0 이상 1 미만의 랜덤 숫자 생성
+        var isEnchantSuccess = false;
+        const random = rando(1, 100); // 1~100사이 랜덤 정수 생성
         if (cardIdx == 0 || summonsCard[cardIdx] >= 2) { //기본강화카드거나 2장이상 모인경우만 작동
           totalCards += 2;
           summonsCard[cardIdx] = summonsCard[cardIdx] - 2; //강화시 2장 소모
-          if (random < percent) {
+          if (random <= percent) {
             successCount[cardIdx]++;
             summonsCard[cardIdx + 1]++;
-			showOverlay('overlay_'+cardIdx+'0', 'overlay_'+cardIdx+'1', timerArr);
+            isEnchantSuccess = true;
+			      showOverlay('overlay_'+cardIdx+'0', 'overlay_'+cardIdx+'1', timerArr);
             document.getElementById("result").textContent = `${cardname} 연성 성공!`;
             document.getElementById("getItemInfo").textContent = `${nextCardname} 획득`;
+            
           } else {
             failureCount[cardIdx]++;
             if (cardIdx <= 1) {
@@ -387,13 +391,12 @@
             document.getElementById("getItemInfo").textContent = `${wantEldainAdd} 엘다인가지고싶다 포인트 획득`;
           }
           document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
-          document.getElementById("detail").textContent = `성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}\n※${cardname} 강화확률 : ${Math.round(percent*100)}%`;
-          return true;
+          document.getElementById("detail").textContent = `성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}\n※${cardname} 강화확률 : ${percent}%`;
+          
         } else {
           document.getElementById("result").textContent = `${cardname}가 부족합니다`;
           document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
           document.getElementById("detail").textContent = `최소 2장 이상 모아주세요`;
-          return false;
         }
         //document.getElementById("eldainProgress").value  =wantEldain ; //엘다인가지고싶다 프로그레스바
         if (wantEldain >= 2000) {
@@ -403,39 +406,47 @@
         //document.getElementById("myEldainNum").textContent = `${eldainQuantity}`;
         updateProgressBar(wantEldain);
         refreshCardQuantity();
+        return isEnchantSuccess;
       }
-
+      var autoEnchantInterval;
       function autoEnchant() {
-        var autoEnchantInterval = setInterval(function() {
-          if(summonsCard[1]<2){
-          enchant(0.5, '기본 연성카드', 0, '★1 연성카드', 1, timers0);
-          }else if(summonsCard[2]<2){
-            enchant(0.47, '★1 연성카드', 1, '★1~2 연성카드', 1, timers1);
-          }else if(summonsCard[3]<2){
-            enchant(0.44, '★1~2 연성카드', 2, '★2 연성 확정 카드', 1, timers2);
-          }else if(summonsCard[4]<2){
-            enchant(0.41, '★2 연성 확정 카드', 3, '★1~3 연성카드', 1, timers3);
-          }else if(summonsCard[5]<2){
-            enchant(0.38, '★1~3 연성카드', 4, '강화된 ★1~3 연성카드', 1, timers4);
-          }else if(summonsCard[6]<2){
-            enchant(0.35, '강화된 ★1~3 연성카드', 5, '★2~3 연성카드', 1, timers5);
-          }else if(summonsCard[7]<2){
-            if(enchant(0.32, '★2~3 연성카드', 6, '강화된 ★2~3 연성카드', 1, timers6))
-            clearInterval(autoEnchantInterval);
+        autoEnchantInterval = setInterval(function() {
+          
+          if(summonsCard[7]>=2){
+            if(enchant(29, '강화된 ★2~3 연성카드', 7, '엘다인사도 연성카드', 1, timers7)){
+              clearInterval(autoEnchantInterval);
+            }
+            
+          }else if(summonsCard[6]>=2){
+            enchant(32, '★2~3 연성카드', 6, '강화된 ★2~3 연성카드', 1, timers6);
+          }else if(summonsCard[5]>=2){
+            enchant(35, '강화된 ★1~3 연성카드', 5, '★2~3 연성카드', 1, timers5);
+          }else if(summonsCard[4]>=2){
+            enchant(38, '★1~3 연성카드', 4, '강화된 ★1~3 연성카드', 1, timers4);
+          }else if(summonsCard[3]>=2){
+            enchant(41, '★2 연성 확정 카드', 3, '★1~3 연성카드', 1, timers3);
+          }else if(summonsCard[2]>=2){
+            enchant(44, '★1~2 연성카드', 2, '★2 연성 확정 카드', 1, timers2);
+          }else if(summonsCard[1]>=2){
+            enchant(47, '★1 연성카드', 1, '★1~2 연성카드', 1, timers1);
+          }else{
+            enchant(50, '기본 연성카드', 0, '★1 연성카드', 1, timers0);
           }
-        }, 10);
+
+          
+        }, 1);
 
       }
 
 
       function getEldain(isPoint) {
-        if (summonsCard[8] >= 1) {
+        if (isPoint || summonsCard[8] >= 1) {
           if (!isPoint) {
             summonsCard[8]--;
-			showOverlay('overlay_81', 'overlay_80', timers8);
+			      showOverlay('overlay_81', 'overlay_80', timers8);
           }
           eldainQuantity++;
-          const randomNumber = Math.floor(Math.random() * 4); // 0우이, 1시온, 2클로에, 3아야
+          const randomNumber = rando(3); // 0우이, 1시온, 2클로에, 3아야
           myEldain[randomNumber]++;
         }
         refreshCardQuantity();
@@ -493,29 +504,29 @@ function clearTimers(timers) {
 }
 
       document.getElementById("summonsCard0").addEventListener("click", function() {
-        enchant(0.5, '기본 연성카드', 0, '★1 연성카드', 1, timers0);
+        enchant(50, '기본 연성카드', 0, '★1 연성카드', 1, timers0);
         
       });
       document.getElementById("summonsCard1").addEventListener("click", function() {
-        enchant(0.47, '★1 연성카드', 1, '★1~2 연성카드', 1, timers1);
+        enchant(47, '★1 연성카드', 1, '★1~2 연성카드', 1, timers1);
       });
       document.getElementById("summonsCard2").addEventListener("click", function() {
-        enchant(0.44, '★1~2 연성카드', 2, '★2 연성 확정 카드', 1, timers2);
+        enchant(44, '★1~2 연성카드', 2, '★2 연성 확정 카드', 1, timers2);
       });
       document.getElementById("summonsCard3").addEventListener("click", function() {
-        enchant(0.41, '★2 연성 확정 카드', 3, '★1~3 연성카드', 1, timers3);
+        enchant(41, '★2 연성 확정 카드', 3, '★1~3 연성카드', 1, timers3);
       });
       document.getElementById("summonsCard4").addEventListener("click", function() {
-        enchant(0.38, '★1~3 연성카드', 4, '강화된 ★1~3 연성카드', 1, timers4);
+        enchant(38, '★1~3 연성카드', 4, '강화된 ★1~3 연성카드', 1, timers4);
       });
       document.getElementById("summonsCard5").addEventListener("click", function() {
-        enchant(0.35, '강화된 ★1~3 연성카드', 5, '★2~3 연성카드', 1, timers5);
+        enchant(35, '강화된 ★1~3 연성카드', 5, '★2~3 연성카드', 1, timers5);
       });
       document.getElementById("summonsCard6").addEventListener("click", function() {
-        enchant(0.32, '★2~3 연성카드', 6, '강화된 ★2~3 연성카드', 1, timers6);
+        enchant(32, '★2~3 연성카드', 6, '강화된 ★2~3 연성카드', 1, timers6);
       });
       document.getElementById("summonsCard7").addEventListener("click", function() {
-        enchant(0.29, '강화된 ★2~3 연성카드', 7, '엘다인사도 연성카드', 1, timers7);
+        enchant(29, '강화된 ★2~3 연성카드', 7, '엘다인사도 연성카드', 1, timers7);
       });
       document.getElementById("summonsCard8").addEventListener("click", function() {
         getEldain(0);
