@@ -290,28 +290,32 @@
           </tr>
           <tr>
             <td style="height:4em;">
-              <button id="summonsCard0" type="button" style="color:black; " class="btn btn-primary">카드 합성</button>
+
+              <div class="input-group mb-3">
+              <input type="text" id="inputCount" class="form-control" placeholder="카드수 입력" aria-label="카드수 입력" value="2" aria-describedby="button-addon2"> <span>장</span>
+              </div>
+
             </td>
             <td>
-              <button id="summonsCard1" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+              <button id="summonsCard1" type="button" style="color:black" class="btn btn-primary">2장 합성</button>
             </td>
             <td>
-              <button id="summonsCard2" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+              <button id="summonsCard2" type="button" style="color:black" class="btn btn-primary">2장 합성</button>
             </td>
             <td>
-              <button id="summonsCard3" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+              <button id="summonsCard3" type="button" style="color:black" class="btn btn-primary">2장 합성</button>
             </td>
             <td>
-              <button id="summonsCard4" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+              <button id="summonsCard4" type="button" style="color:black" class="btn btn-primary">2장 합성</button>
             </td>
             <td>
-              <button id="summonsCard5" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+              <button id="summonsCard5" type="button" style="color:black" class="btn btn-primary">2장 합성</button>
             </td>
             <td>
-              <button id="summonsCard6" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+              <button id="summonsCard6" type="button" style="color:black" class="btn btn-primary">2장 합성</button>
             </td>
             <td>
-              <button id="summonsCard7" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
+              <button id="summonsCard7" type="button" style="color:black" class="btn btn-primary">2장 합성</button>
             </td>
             <td>
               <button id="summonsCard8" type="button" style="color:black" class="btn btn-primary">뽑기</button>
@@ -320,10 +324,8 @@
           <tr>
             <td style="height:4em;">
               
-              <div class="input-group mb-3">
-                <input type="text" id="inputCount" class="form-control" placeholder="횟수" aria-label="횟수" aria-describedby="button-addon2">
-                <button class="btn btn-primary" type="button" style="color:black; " id="summonsCardNumber">합성</button>
-              </div>
+
+              <button id="summonsCardNumber" type="button" style="color:black" class="btn btn-primary">카드 합성</button>
             </td>
             <td>
               <button id="summonsCardAll1" type="button" style="color:black" class="btn btn-primary">전체 합성</button>
@@ -359,7 +361,6 @@
     </div>
 	<div class="infoTexts">
 	<span id="result"></span>
-    <span id="info"></span><br>
     <span id="getItemInfo"></span><br>
     <span id="detail"></p></span>
 
@@ -428,12 +429,12 @@
                   document.getElementById("result").textContent = `${cardname} 연성 실패... `;
                   document.getElementById("getItemInfo").textContent = `${wantEldainAdd} 엘다인가지고싶다 포인트 획득`;
               }
-              document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
-              document.getElementById("detail").textContent = `성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}\n※${cardname} 강화확률 : ${percent}%`;
+              //document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
+              document.getElementById("detail").textContent = `성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}, 내 확률 : ${(successCount[cardIdx]/(successCount[cardIdx]+failureCount[cardIdx]) * 100).toFixed(2)}%\n※${cardname} 강화확률 : ${percent}%`;
 
           } else {
               document.getElementById("result").textContent = `${cardname}가 부족합니다`;
-              document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
+              //document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
               document.getElementById("detail").textContent = `최소 2장 이상 모아주세요`;
           }
         }else{ //다중합성모드
@@ -458,8 +459,8 @@
           }
           wantEldain += wantEldainAdd;
           document.getElementById("getItemInfo").textContent = `${nextCardname} ${successes}장 획득 \n엘다인가지고싶다 ${wantEldainAdd}포인트 획득`;
-          document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
-          document.getElementById("detail").textContent = `성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]}\n※${cardname} 강화확률 : ${percent}%`;
+          //document.getElementById("info").textContent = `소모한 전체 카드 수 : ${totalCards}`;
+          document.getElementById("detail").textContent = `성공 횟수 : ${successCount[cardIdx]}, 실패 횟수 : ${failureCount[cardIdx]},  내 확률 : ${(successCount[cardIdx]/(successCount[cardIdx]+failureCount[cardIdx]) * 100).toFixed(2)}%\n※${cardname} 강화확률 : ${percent}%`;
         }
         for (;wantEldain >= 2000;wantEldain -= 2000){
             getEldain(1);
@@ -565,10 +566,6 @@ function clearTimers(timers) {
     timers = [];
 }
 
-      document.getElementById("summonsCard0").addEventListener("click", function() {
-        enchant(50, '기본 연성카드', 0, '★1 연성카드', 1, timers0);
-        
-      });
       document.getElementById("summonsCard1").addEventListener("click", function() {
         enchant(47, '★1 연성카드', 1, '★1~2 연성카드', 1, timers1);
       });
@@ -615,10 +612,10 @@ function clearTimers(timers) {
 
       document.getElementById("summonsCardNumber").addEventListener("click", function() {
         const inputCount = parseInt(document.getElementById("inputCount").value);
-        if (Number.isInteger(inputCount) && inputCount > 0 && inputCount <= 999999) {
-          enchant(50, '기본 연성카드', 0, '★1 연성카드', inputCount, timers0);
+        if (Number.isInteger(inputCount) && inputCount % 2 === 0 && inputCount >= 2 && inputCount <= 1000000) {
+          enchant(50, '기본 연성카드', 0, '★1 연성카드', Math.floor(inputCount/2), timers0);
         } else {
-          $(".modal-body").text("한번에 합성할 1 이상 999999이하의 숫자만 입력하세요");
+          $(".modal-body").text("2장 이상 1000000장 이하의 짝수만 입력하세요");
           $('#modal').modal('show');
         }		
       });
