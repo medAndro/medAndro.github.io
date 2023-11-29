@@ -166,7 +166,7 @@
       </div>
       <div id="eldainText" style="margin-left: 1em;">엘다인 사도 가지고 싶다</div>
     </div>
-    <h2 class="mt-4" style="margin-bottom: 1em;">획득한 엘다인 <span id="myEldainNum">없어욧!</span>
+    <h3 class="mt-4" style="margin-bottom: 1em;">획득한 엘다인 <span id="myEldainNum">없어욧!</span>
     </h2>
     <div class="table-container">
       <table>
@@ -509,19 +509,19 @@
 			      showOverlay('overlay_81', 'overlay_80', timers8);
           }
           eldainQuantity++;
-          const randomNumber = rando(3); // 0우이, 1시온, 2클로에, 3아야
+          const randomNumber = rando(4); // 0우이, 1시온, 2클로에, 3아야 4비비
           myEldain[randomNumber]++;
         }
         refreshCardQuantity();
         document.getElementById("myEldainNum").textContent = ``;
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 5; i++) {
           if (myEldain[i]) {
-            const eldainIcons = ["./img/Icon_GraduateSKill_Ui.png", "./img/Icon_GraduateSKill_xXionx.png", "./img/Icon_GraduateSKill_Chloe.png", "./img/Icon_GraduateSKill_Aya.png"];
-            const eldainNames = ["우이", "시온", "클로에", "아야"];
+            const eldainIcons = ["./img/Icon_GraduateSKill_Ui.png", "./img/Icon_GraduateSKill_xXionx.png", "./img/Icon_GraduateSKill_Chloe.png", "./img/Icon_GraduateSKill_Aya.png", "./img/Icon_GraduateSKill_Bibi.png"];
+            const eldainNames = ["우이", "시온", "클로에", "아야", "비비"];
             const imageTag = document.createElement("img");
             imageTag.src = eldainIcons[i];
-            imageTag.style.width = "3rem";
-            imageTag.style.height = "3rem";
+            imageTag.style.width = "2.5rem";
+            imageTag.style.height = "2.5rem";
             imageTag.style.borderRadius = "50%";
             const numberTag = document.createElement("span");
             numberTag.textContent = eldainNames[i] + "x" + myEldain[i] + " ";
