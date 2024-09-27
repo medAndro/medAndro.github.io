@@ -154,7 +154,8 @@
     </div>
   </div>
 </div>
-      <h1> 트릭컬 리바이브 연성카드 시뮬레이터</h1>
+      <h1> 트릭컬 리바이브</h1>
+	  <h2> 연성카드 시뮬레이터</h2>
     </div>
     <div style="display: flex; align-items: center; max-width: 40em; position: relative;">
       <div style="flex: 1; display: flex; align-items: center; position: relative;">
@@ -164,7 +165,7 @@
         <img src="img/SummonsCard_09.png" alt="아이콘" style="max-width: 3rem; margin-left: -0.5em;">
         <small class="position-absolute" id="progressText" style="left: 50%; transform: translateX(-50%);">0 / 2000</small>
       </div>
-      <div id="eldainText" style="margin-left: 1em;">엘다인 사도 가지고 싶다</div>
+      <div id="eldainText" style="margin-left: 1em;">엘다인 사도<br>가지고 싶다</div>
     </div>
     <h3 class="mt-4" style="margin-bottom: 1em;">획득한 엘다인 <span id="myEldainNum">없어욧!</span>
     </h2>
@@ -521,11 +522,12 @@
             const eldainNames = ["우이", "시온", "클로에", "아야", "비비", "에피카", "이드", "리뉴아", "죠안"];
             const imageTag = document.createElement("img");
             imageTag.src = eldainIcons[i];
-            imageTag.style.width = "2.5rem";
-            imageTag.style.height = "2.5rem";
+            imageTag.style.width = "2rem";
+            imageTag.style.height = "2rem";
             imageTag.style.borderRadius = "50%";
             const numberTag = document.createElement("span");
             numberTag.textContent = eldainNames[i] + "x" + myEldain[i] + " ";
+			numberTag.style.fontSize = "0.7em";
             document.getElementById("myEldainNum").appendChild(imageTag);
             document.getElementById("myEldainNum").appendChild(numberTag);
           }
