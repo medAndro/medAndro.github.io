@@ -371,7 +371,7 @@
       let totalCards = 0;
       let wantEldain = 0;
       let eldainQuantity = 0;
-      var myEldain = new Array(7); //엘다인 보유량
+      var myEldain = new Array(100); //엘다인 보유량
       var summonsCard = new Array(9);
       summonsCard.fill(0);
       successCount.fill(0);
@@ -471,8 +471,8 @@
       }
       var autoEnchantInterval;
       function autoEnchant() {
+	  
         autoEnchantInterval = setInterval(function() {
-          
           if(summonsCard[7]>=2){
             if(enchant(29, '강화된 ★2~3 연성카드', 7, '엘다인사도 연성카드', 1, timers7)){
               $("#stopAutoEldainCard").hide(); 
@@ -509,15 +509,16 @@
 			      showOverlay('overlay_81', 'overlay_80', timers8);
           }
           eldainQuantity++;
-          const randomNumber = rando(4); // 0우이, 1시온, 2클로에, 3아야 4비비
+          const randomNumber = rando(8); // 0우이, 1시온, 2클로에, 3아야 4비비 5에피카 6이드 7리뉴아 8죠안
           myEldain[randomNumber]++;
         }
         refreshCardQuantity();
         document.getElementById("myEldainNum").textContent = ``;
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 9; i++) {
           if (myEldain[i]) {
-            const eldainIcons = ["./img/Icon_GraduateSKill_Ui.png", "./img/Icon_GraduateSKill_xXionx.png", "./img/Icon_GraduateSKill_Chloe.png", "./img/Icon_GraduateSKill_Aya.png", "./img/Icon_GraduateSKill_Bibi.png"];
-            const eldainNames = ["우이", "시온", "클로에", "아야", "비비"];
+            const eldainIcons = ["./img/Icon_GraduateSKill_Ui.png", "./img/Icon_GraduateSKill_xXionx.png", "./img/Icon_GraduateSKill_Chloe.png", "./img/Icon_GraduateSKill_Aya.png", "./img/Icon_GraduateSKill_Bibi.png", 
+			"./img/Epica.png", "./img/ED.png", "./img/Renewa.png", "./img/Joanne.png"];
+            const eldainNames = ["우이", "시온", "클로에", "아야", "비비", "에피카", "이드", "리뉴아", "죠안"];
             const imageTag = document.createElement("img");
             imageTag.src = eldainIcons[i];
             imageTag.style.width = "2.5rem";
